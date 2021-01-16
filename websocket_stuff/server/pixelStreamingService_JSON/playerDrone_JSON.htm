@@ -1,0 +1,115 @@
+<!-- Copyright Epic Games, Inc. All Rights Reserved. -->
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+	<link type="text/css" rel="stylesheet" href="player.css">
+    <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script type="text/javascript" src="scripts/webRtcPlayer.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
+</head>
+
+<body onload="load()">
+	<div id="playerUI">
+		<div id="player"></div>
+		<div id="overlay" class="overlay">
+			<div>
+				<div id="qualityStatus" class="greyStatus">&#9679</div>
+				<div id="overlayButton">+</div>
+			</div>
+			<div id="overlaySettings">
+				<div id="KickOthers">
+					<div class="settings-text">Kick all other players</div>
+					<label class="btn-overlay">
+						<input type="button" id="kick-other-players-button" class="overlay-button btn-flat" value="Kick">
+					</label>
+				</div>
+                <div id="FillWindow">
+                    <div class="settings-text">Enlarge Display to Fill Window</div>
+                    <label class="tgl-switch">
+                        <input type="checkbox" id="enlarge-display-to-fill-window-tgl" class="tgl tgl-flat" checked>
+                        <div class="tgl-slider"></div>
+                    </label>
+                </div>
+                <div id="QualityControlOwnership">
+                    <div class="settings-text">Quality control ownership</div>
+                    <label class="tgl-switch">
+                        <input type="checkbox" id="quality-control-ownership-tgl" class="tgl tgl-flat">
+                        <div class="tgl-slider"></div>
+                    </label>
+                </div>
+				<div id="statsSetting"> 
+					<div class="settings-text">Show Stats</div>
+					<label class="tgl-switch">
+						<input type="checkbox" id="show-stats-tgl" class="tgl tgl-flat" checked>
+						<div class="tgl-slider"></div>
+					</label>
+					<div id="statsContainer">
+						<div id="stats"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+// ---------------- This part was added in by me, originally this file has no JavaScript ---------------
+	
+	// create JSON object to store drone values
+	var droneStuff = {
+        Name: "",
+		MaxSpeed: undefined,
+		Color: undefined,
+		ColorRGB: undefined		
+	}; 
+		
+    const sock = new WebSocket('ws://3.16.89.150'); 	// connect to the playerServer through websocket 
+    sock.onopen = function(){
+        console.log('Connected to WebSocket!'); 	// log to the console when connection to websocket is opened
+    }
+	
+    sock.onmessage = function(e){ 	// when message is received from playerServer; should contain info on what fields to update the drone 
+		var msg = e.data; 	// e is the message sent from websocket, we want to extract the 'data' field so we can read values
+		console.log(msg);
+		// ----------- TEST TO SEE IF JSON OBJECT HAS BEEN PASSED IN ---------
+		try{
+			var fromScratch = JSON.parse(msg); 	// msg is a string, we want to turn it back into JSON
+		}
+		catch (err) {
+			console.error('NOT A JSON object!'); 	// throw error if message sent through websocket is not JSON format
+		return;
+		}
+		// ----------------- CHECK IF JSON HAS SCRATCH CONTENT ----------------------
+		if (fromScratch.hasOwnProperty("scratch")){
+			console.log('JSON Recieved');
+			console.log(fromScratch);
+			
+			// ------ check which fields we are going to update for the Drone according to JSON obect's content
+			if (fromScratch.hasOwnProperty("Name")){
+				console.log('Changing Name');
+				droneStuff.Name = fromScratch.Name;
+			} 
+			if(fromScratch.hasOwnProperty("MaxSpeed")){
+				console.log('Changing Max Speed');
+				droneStuff.MaxSpeed = fromScratch.MaxSpeed;
+			}
+			if(fromScratch.hasOwnProperty("Color")){
+				console.log('Chaning Color');
+				droneStuff.Color = fromScratch.Color;
+				droneStuff.ColorRGB = undefined; 	// make RGB color have no effect; cant have both RGB and string color at the same time
+			}
+			if(fromScratch.hasOwnProperty("ColorRGB")){
+				console.log('Changing Color RGB');
+				droneStuff.ColorRGB = fromScratch.ColorRGB;
+				droneStuff.Color = undefined; 	// make string color have no effect; cant have both RGB and string color at the same time
+
+			}
+			emitUIInteraction(droneStuff); 	// execute changes
+		}
+    }
+</script>
+</html> 

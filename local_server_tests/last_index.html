@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <title>Websocket Practice</title>
+</head>
+
+<body>
+<h1> This is the testing website</h1>
+<h2 id = 'status'> Scratch not connected</h2>
+</body>
+
+<script>
+    const ws = new WebSocket('ws://localhost:8882');
+    ws.onopen = () => {
+        console.log('Now connected');
+    };
+
+    ws.onmessage = function(e){
+        let msg = e.data;
+        console.log(msg);
+        if (msg == "scratch connected"){
+            document.getElementById('status').innerHTML = msg;
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,107 @@
+<!-- Copyright Epic Games, Inc. All Rights Reserved. -->
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+	<link type="text/css" rel="stylesheet" href="player.css">
+    <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script type="text/javascript" src="scripts/webRtcPlayer.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
+</head>
+​
+<body onload="load()">
+	<div id="playerUI">
+		<div id="player"></div>
+		<div id="overlay" class="overlay">
+			<div id="overlayButton" onclick="onExpandOverlay_Click()">+</div>
+			<div id="overlaySettings" style="display: block">
+				<div id="KickOthers">
+					<div class="settings-text">Kick all other players</div>
+					<label class="btn-overlay">
+						<input type="button" id="kick-other-players-button" class="overlay-button btn-flat" value="Kick">
+					</label>
+				</div>
+                <div id="FillWindow">
+                    <div class="settings-text">Enlarge Display to Fill Window</div>
+                    <label class="tgl-switch">
+                        <input type="checkbox" id="enlarge-display-to-fill-window-tgl" class="tgl tgl-flat" checked>
+                        <div class="tgl-slider"></div>
+                    </label>
+                </div>
+                <div id="QualityControlOwnership">
+                    <div class="settings-text">Quality control ownership</div>
+                    <label class="tgl-switch">
+                        <input type="checkbox" id="quality-control-ownership-tgl" class="tgl tgl-flat">
+                        <div class="tgl-slider"></div>
+                    </label>
+                </div>
+				<div id="statsSetting"> 
+					<div class="settings-text">Show Stats</div>
+					<label class="tgl-switch">
+						<input type="checkbox" id="show-stats-tgl" class="tgl tgl-flat">
+						<div class="tgl-slider"></div>
+					</label>
+					<div id="statsContainer">
+						<div id="stats"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+const WebSocket = require('ws'); 
+const socketServer = new WebSocket.Server({port: 8882});
+
+socketServer.on('connection', (socketClient) => {
+    console.log('Connected!');
+    //console.log(socketServer.clients)
+
+    socketClient.on('close', (socketClient) => {
+        console.log('closed!');
+    });
+
+    socketClient.onmessage = function(e){
+        let msg = e.data;
+        console.log(msg);
+        let test = msg.slice(0, 7)
+        
+        if (test == 'scratch'){     // if its a message from scratch then send it to all clients
+            //socketServer.clients.forEach((client) => {
+              //  client.send(msg);
+            //});
+            console.log('scratch received');
+            emitUIInteraction("ScratchTestIn");
+        }
+    };
+}); 
+ 
+// socketServer.onmessage = function(e){
+//     let msg = e.data; 
+//     console.log(e);
+// }
+
+/*
+    const ws = new WebSocket('ws://3.131.26.230:80');
+
+    ws.onopen = function(){
+        console.log('Connected to WebSocket!');
+    }
+
+    ws.onmessage = function(e){
+        var msg = e.data;
+        console.log(msg);
+        let test = msg.slice(0,7);  // test message to see if its from scratch
+
+        if (test == 'scratch'){
+            console.log('Unreal engine command ran: ' + msg.slice(7));
+            emitUIInteraction("ScratchTestIn"); 
+        }
+    }
+*/
+</script>
+</html>
