@@ -1,5 +1,8 @@
 # Table of Contents
 
+
+Code for simulator blocks is found in "scratch/scratch-vm/src/extensions/simulator/index.js"
+
 ## scratch
 This folder contains all the scratch code for the blocks
 
