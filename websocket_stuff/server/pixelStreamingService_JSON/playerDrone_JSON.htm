@@ -57,9 +57,7 @@
 </body>
 
 <script>
-// ---------------- This part was added in by me, originally this file has no JavaScript ---------------
-	
-	// create JSON object to store drone values
+
 	var droneStuff = {
         Name: "",
 		MaxSpeed: undefined,
@@ -67,28 +65,25 @@
 		ColorRGB: undefined		
 	}; 
 		
-    const sock = new WebSocket('ws://3.16.89.150'); 	// connect to the playerServer through websocket 
+    const sock = new WebSocket('ws://3.16.89.150');
     sock.onopen = function(){
-        console.log('Connected to WebSocket!'); 	// log to the console when connection to websocket is opened
+        console.log('Connected to WebSocket!');
     }
-	
-    sock.onmessage = function(e){ 	// when message is received from playerServer; should contain info on what fields to update the drone 
-		var msg = e.data; 	// e is the message sent from websocket, we want to extract the 'data' field so we can read values
+    sock.onmessage = function(e){
+		var msg = e.data;
 		console.log(msg);
 		// ----------- TEST TO SEE IF JSON OBJECT HAS BEEN PASSED IN ---------
 		try{
-			var fromScratch = JSON.parse(msg); 	// msg is a string, we want to turn it back into JSON
+			var fromScratch = JSON.parse(msg);
 		}
 		catch (err) {
-			console.error('NOT A JSON object!'); 	// throw error if message sent through websocket is not JSON format
+			console.error('NOT A JSON object!');
 		return;
 		}
 		// ----------------- CHECK IF JSON HAS SCRATCH CONTENT ----------------------
 		if (fromScratch.hasOwnProperty("scratch")){
 			console.log('JSON Recieved');
 			console.log(fromScratch);
-			
-			// ------ check which fields we are going to update for the Drone according to JSON obect's content
 			if (fromScratch.hasOwnProperty("Name")){
 				console.log('Changing Name');
 				droneStuff.Name = fromScratch.Name;
@@ -100,12 +95,12 @@
 			if(fromScratch.hasOwnProperty("Color")){
 				console.log('Chaning Color');
 				droneStuff.Color = fromScratch.Color;
-				droneStuff.ColorRGB = undefined; 	// make RGB color have no effect; cant have both RGB and string color at the same time
+				droneStuff.ColorRGB = undefined; 	// make RGB color have no effect
 			}
 			if(fromScratch.hasOwnProperty("ColorRGB")){
 				console.log('Changing Color RGB');
 				droneStuff.ColorRGB = fromScratch.ColorRGB;
-				droneStuff.Color = undefined; 	// make string color have no effect; cant have both RGB and string color at the same time
+				droneStuff.Color = undefined; 	// make string color have no effect
 
 			}
 			emitUIInteraction(droneStuff); 	// execute changes

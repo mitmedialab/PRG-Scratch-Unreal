@@ -11,6 +11,12 @@ const StageLayering = require('../../engine/stage-layering');
 
 const blockIconURI = "https://img.icons8.com/cotton/64/000000/visual-game-boy--v1.png";     // REQUIRED FOR BLOCK TO WORK. Doesnt show up otherwise
 
+// ------------ Import JQUERY (unsure if this works or not!!!) ---------------------
+
+//var script = document.createElement('script');
+//script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
+//script.type = 'text/javascript';
+//document.getElementsByTagName('head')[0].appendChild(script);
 
 
 
@@ -256,6 +262,53 @@ class Scratch3SimulatorBlocks {
                             defaultValue: "None",
                         }
                     }
+                },
+                {   // ComboDrone
+                    opcode: 'comboDrone',
+                    text: formatMessage({
+                        id: 'drone combo',
+                        default: 'Name: [TEXT] MaxSpeed: [TEXT2] Color: [TEXT3]',
+                        description: 'allows creating mutliple options for drone'
+                        }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        TEXT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: "None",
+                        },
+                        TEXT2: {
+                            type: ArgumentType.STRING,
+                            defaultValue: "100",
+                        },
+                        TEXT3: {
+                            type: ArgumentType.STRING,
+                            defaultValue: "Red",
+                            menu: "color"
+                        }
+                    }
+                },
+                {   // ComboDrone RGB
+                    opcode: 'comboDroneRGB',
+                    text: formatMessage({
+                        id: 'drone combo rgb',
+                        default: 'Name: [TEXT] MaxSpeed: [TEXT2] RGB Color: [TEXT3]',
+                        description: 'allows creating mutliple options for drone'
+                        }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        TEXT: {
+                            type: ArgumentType.STRING,
+                            defaultValue: "None",
+                        },
+                        TEXT2: {
+                            type: ArgumentType.STRING,
+                            defaultValue: "100",
+                        },
+                        TEXT3: {
+                            type: ArgumentType.STRING,
+                            defaultValue: "-.6-.4-1-1"
+                        }
+                    }
                 }
             ],
 
@@ -350,31 +403,84 @@ class Scratch3SimulatorBlocks {
 
     drone_name(args){
         var msg = Cast.toString(args.TEXT);
-        msg = 'scratch: DroneName-' + msg;  // REV7 AND REV8    
-        // msg = '{"scratch": true, "UserInput": "' + msg + '"}';  // UNSURE JSON
-        console.log("sending message: " + msg);
-        ws.send(msg);
+        // msg = 'scratch: DroneName-' + msg;  // REV7 AND REV8    
+
+        let out = {
+            scratch: true,
+            Name: msg         
+                  };
+
+        console.log("sending message: " + JSON.stringify(out));
+        ws.send(JSON.stringify(out));
     }
 
     drone_speed(args){
         var msg = Cast.toString(args.TEXT);
-        msg = 'scratch: DroneMaxSpeed-' + msg;
-        console.log("sending message: " + msg);
-        ws.send(msg);
+        // msg = 'scratch: DroneMaxSpeed-' + msg;   // REV7 and REV8
+        let out = {
+            scratch: true,
+            MaxSpeed: msg         
+                  };
+
+        console.log("sending message: " + JSON.stringify(out));
+        ws.send(JSON.stringify(out));
     }
 
     drone_color(args){
         var msg = Cast.toString(args.TEXT);
-        msg = 'scratch: DroneColor-' + msg;
-        console.log("sending message: " + msg);
-        ws.send(msg);
+        // msg = 'scratch: DroneColor-' + msg;  //REV7 and REV8
+        let out = {
+            scratch: true,
+            Color: msg         
+                  };
+
+        console.log("sending message: " + JSON.stringify(out));
+        ws.send(JSON.stringify(out));
     }
+
     drone_rgb(args){
         var msg = Cast.toString(args.TEXT);
-        msg = 'scratch: DroneColorRGB-' + msg;
-        console.log("sending message: " + msg);
-        ws.send(msg);
+        // msg = 'scratch: DroneColorRGB-' + msg;   //Rev7 and Rev8
+        let out = {
+            scratch: true,
+            ColorRGB: msg         
+                  };
+
+        console.log("sending message: " + JSON.stringify(out));
+        ws.send(JSON.stringify(out));
     }
+
+    comboDrone(args){
+        var name = Cast.toString(args.TEXT);
+        var speed = Cast.toString(args.TEXT2);
+        var color = Cast.toString(args.TEXT3);
+        let out = {
+            scratch: true,
+            Name: name,
+            MaxSpeed: parseInt(speed),
+            Color: color         
+                  };
+
+        console.log("sending message: " + JSON.stringify(out));
+        ws.send(JSON.stringify(out));
+    }
+
+    comboDroneRGB(args){
+        var name = Cast.toString(args.TEXT);
+        var speed = Cast.toString(args.TEXT2);
+        var color = Cast.toString(args.TEXT3);
+        let out = {
+            scratch: true,
+            Name: name,
+            MaxSpeed: parseInt(speed),
+            ColorRGB: color         
+                  };
+
+        console.log("sending message: " + JSON.stringify(out));
+        ws.send(JSON.stringify(out));
+    }
+
+
 
 }
 
