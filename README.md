@@ -1,4 +1,6 @@
-# Table of Contents
+# NON-JSON VERSION
+
+# Table of Contents 
 
 
 Code for simulator blocks is found in "scratch/scratch-vm/src/extensions/simulator/index.js"
