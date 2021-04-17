@@ -120,12 +120,12 @@ This is an example of a non-JSON block's opcode:
 ```
     drone_name(args){
         var msg = Cast.toString(args.TEXT);
-        msg = 'scratch: DroneName-' + msg;  // for REV7 AND REV8    
+        msg = 'scratch: DroneName-' + msg;  // for REV7, REV8, and REV10    
         console.log("sending message: " + msg);
         ws.send(msg);
     }
 ```
-Here, the message that is sent over the WebSocket is "scratch: DroneName-input" where input is whatever the user typed into the block. The `playerServer` will splice the message and look for "scratch". If it finds "scratch" in the message, then it will run the code that has been set up for receiving Scratch messages.
+Here, the message that is sent over the WebSocket is "scratch: DroneName-input" where input is whatever the user typed into the block. The `playerServer` will splice the message and look for "scratch". If it finds "scratch" in the message, then it will run the code that has been set up for receiving Scratch messages. If it does not find "scratch" in the message, then it will not perform any further action regarding scratch commands. This system is set up so that the server can differentiate between scratch messages and other info that is coming in.
 
 ### Using JSON
 

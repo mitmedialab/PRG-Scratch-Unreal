@@ -28,11 +28,25 @@ The way that a message travels from Scratch to Unreal Engine is as follows:
 Scratch -> Websocket connection to `playerServer` -> `playerServer` recieves message from Scratch -> `player.htm` recieves message from `playerServer` via WebSocket Connection -> Unreal Engine via emmitUIInteraction() command
 
 ## Placement of these two files
-Both of these files should be renamed to `cirrus.js` and `player.htm`. Then they should be placed in the `SignalingWebServer` folder of the PixelStreaming folder for the Unreal Engine source code. Create a new folder and move the `cirrus.js` and the `player.htm` files that come with the source code to your new folder (its good to keep them just in case something goes wrong). Those work and are great, but do not come with Scratch functionality, so we will not use them.
+
+Navigate to this location inside of whichever Rev of Unreal Engine you are using:
+
+> \Engine\Source\Programs\PixelStreaming\WebServers\SignallingWebServer\
+
+Create a new folder and name it 'old_files'. Move the `cirrus.js` and the `player.htm` files **that come with the Unreal Engine source code** to the 'old_files' folder (its good to keep them just in case something goes wrong). Those work and are great, but do not come with Scratch functionality, so we will not use them.
+
+Then we want to take our versions of `player.htm` and `cirrus.js` **from this repo** and place them in the `SignalingWebServer` folder of the Unreal Engine source code. 
 
 ## Extra prep for SignalingWebServer
 
 There are a couple other things that have to be done for Unreal Engine to work remotely.
+
+### Changing IP address inside of player.htm file
+Apart from changing the IP adress inside of the files that are normally changed for Unreal Engine, you have to change the IP address inside of `player.htm` as well. After the `</body>` tag in `player.htm`, there will be some JavaScript inside of `<script>` tags. You should see a line in which a new WebSocket connection is created, it should read something like this:
+```
+let sock = new WebSocket('ws://3.16.157.53');
+```
+All that needs to be done here is changing the IP adress string inside of the WebSocket's creation. This is needed for changes to appear in Unreal Engine. The `emitUIInteraction()` command will not be run otherwise.
 
 ### Setting up the STUN server
 https://youtu.be/9V6Iy-OSlc4?t=262

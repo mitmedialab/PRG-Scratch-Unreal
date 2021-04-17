@@ -59,13 +59,14 @@
 <script>
 // ---------------- This part was added in by me, originally this file has no JavaScript ---------------
 	
-	// create JSON object to store drone values
-	var droneStuff = {
+   // create JSON object to store drone values
+	
+   var droneStuff = {
         Name: "",
-		MaxSpeed: undefined,
-		Color: undefined,
-		ColorRGB: undefined		
-	}; 
+	MaxSpeed: undefined,
+	Color: undefined,
+	ColorRGB: undefined		
+    }; 
 		
     const sock = new WebSocket('ws://3.16.89.150'); 	// connect to the playerServer through websocket 
     sock.onopen = function(){

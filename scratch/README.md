@@ -1,7 +1,7 @@
 # Scratch Block Extensions
 
 ## Intro 
-Scratch extensions is how we managed to get our custom blocks to appear in Scratch.
+Scratch extensions are how we managed to get our custom blocks to appear in Scratch.
 [This is the article](https://medium.com/@hiroyuki.osaki/how-to-develop-your-own-block-for-scratch-3-0-1b5892026421) that I followed in order to create my own blocks. Follow the second method.
 
 ## Small but important detail
@@ -23,7 +23,7 @@ There are two other files that you have to update. The article will walk you thr
 [Here is another article](https://medium.com/@hiroyuki.osaki/scratch-3-block-types-you-can-develop-and-samples-191b0d769b91) that goes more into depth on the specifications for blocks and the different types that you can make. [This link](https://github.com/LLK/scratch-vm/blob/develop/docs/extensions.md) has some great information on block creation as well as an **excellent example** of a working extension that utilizes multiple different inputs (not just singular-input blocks) for you to understand how to customize your blocks a little more.
 
 ### Setting up the boilerplate to work with your changes
-After you have implemented your changes, you have to run some commands for the changes to take effect.
+After you have implemented your changes to the Scratch extension, you have to run some commands for the changes to take effect.
 
 1. cd into ``scratch-vm`` and run ``npm link``. 
 2. Then cd into ``scratch-gui`` and run ``npm link scratch-vm``. The two folders should now be linked. 
