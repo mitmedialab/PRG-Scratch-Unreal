@@ -22,11 +22,11 @@ Hopefully this is a clear depiction of how information travels from Scratch to U
 # All README files present in this repo
 Here is a list of all the README files that exist for this repo. I suggest you read them all in order to understand how the system works.
 
-[Table of Contents and Communication Flowchart](github.com/mitmedialab/PRG-Scratch-Unreal/prg_simulator_scratch/blob/master/README.md)
+[Table of Contents and Communication Flowchart](https://github.com/mitmedialab/PRG-Scratch-Unreal/prg_simulator_scratch/blob/master/README.md)
 
 [Intro to Scratch Extensions](https://github.com/mitmedialab/PRG-Scratch-Unreal/blob/master/scratch/README.md)
 
-[Simulator Extension Blocks and How They Work](github.com/mitmedialab/PRG-Scratch-Unreal/blob/master/scratch/scratch-vm/src/extensions/simulator/README.md)
+[Simulator Extension Blocks and How They Work](https://github.com/mitmedialab/PRG-Scratch-Unreal/blob/master/scratch/scratch-vm/src/extensions/simulator/README.md)
 
 [Server Side Overview](https://github.com/mitmedialab/PRG-Scratch-Unreal/blob/master/websocket_stuff/server/README.md)
 
