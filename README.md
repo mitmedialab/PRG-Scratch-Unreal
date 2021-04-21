@@ -22,12 +22,12 @@ Hopefully this is a clear depiction of how information travels from Scratch to U
 # All README files present in this repo
 Here is a list of all the README files that exist for this repo. I suggest you read them all in order to understand how the system works.
 
-[Table of Contents and Communication Flowchart](https://github.mit.edu/bleo/prg_simulator_scratch/blob/master/README.md)
+[Table of Contents and Communication Flowchart](github.com/mitmedialab/PRG-Scratch-Unreal/prg_simulator_scratch/blob/master/README.md)
 
-[Intro to Scratch Extensions](https://github.mit.edu/bleo/prg_simulator_scratch/blob/master/scratch/README.md)
+[Intro to Scratch Extensions](https://github.com/mitmedialab/PRG-Scratch-Unreal/blob/master/scratch/README.md)
 
-[Simulator Extension Blocks and How They Work](https://github.mit.edu/bleo/prg_simulator_scratch/blob/master/scratch/scratch-vm/src/extensions/simulator/README.md)
+[Simulator Extension Blocks and How They Work](github.com/mitmedialab/PRG-Scratch-Unreal/blob/master/scratch/scratch-vm/src/extensions/simulator/README.md)
 
-[Server Side Overview](https://github.mit.edu/bleo/prg_simulator_scratch/blob/master/websocket_stuff/server/README.md)
+[Server Side Overview](https://github.com/mitmedialab/PRG-Scratch-Unreal/blob/master/websocket_stuff/server/README.md)
 
-[Local Server Tests - outdated but maybe useful](https://github.mit.edu/bleo/prg_simulator_scratch/blob/master/local_server_tests/README.md)
+[Local Server Tests - outdated but maybe useful](https://github.com/mitmedialab/PRG-Scratch-Unreal/blob/master/local_server_tests/README.md)
