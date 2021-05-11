@@ -6,11 +6,11 @@ AWS.config.update({region: 'us-east-1'});
 // Create EC2 service object
 var ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
 
-// AMI is amzn-ami-2011.09.1.x86_64-ebs
+// 
 var instanceParams = {
-   ImageId: 'ami-0d5eff06f840b45e9', 
+   ImageId: 'ami-0be2609ba883822ec', 
    InstanceType: 't2.micro',
-   KeyName: 'novysan-macbook',
+   KeyName: 'XR',
    MinCount: 1,
    MaxCount: 1
 };
@@ -28,7 +28,7 @@ instancePromise.then(
     tagParams = {Resources: [instanceId], Tags: [
        {
           Key: 'Name',
-          Value: 'SDK Sample'
+          Value: 'NovySan SDK Test'
        }
     ]};
     // Create a promise on an EC2 service object
