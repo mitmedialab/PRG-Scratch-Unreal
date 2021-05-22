@@ -12,9 +12,23 @@ const paramsRunning = {
             Name:'instance-state-name',
             Values:[
                 'running'
+                ],
+
+              },
+        {
+            Name:'instance-type',
+            Values:[
+                'g4dn.xlarge'
                 ]
-        }
+              },
+	{
+            Name:'tag:Name',
+            Values:[
+                'scratch-XR-Test'
+                ]
+              }
     ]
+
 };
 
 // Call EC2 to retrieve policy for selected bucket
@@ -41,9 +55,23 @@ const paramsStopped = {
             Name:'instance-state-name',
             Values:[
                 'stopped'
+                ],
+
+              	},
+        {
+            Name:'instance-type',
+            Values:[
+                'g4dn.xlarge'
                 ]
-        }
+        	},
+	{
+            Name:'tag:Name',
+            Values:[
+                'scratch-XR-Test'
+                ]
+              	}
     ]
+
 };
 
 ec2.describeInstances(paramsStopped, function(err, data) {

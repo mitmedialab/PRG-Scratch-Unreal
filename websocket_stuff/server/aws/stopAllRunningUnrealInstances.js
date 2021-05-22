@@ -6,51 +6,52 @@ AWS.config.update({region: 'us-east-2'});
 // Create EC2 service object
 const ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
 
-const paramsStoppedG4 = {
+const params = {
     Filters: [
         {
             Name:'instance-state-name',
             Values:[
-                'stopped'
-                ],
-        
-              },
-        {
-            Name:'instance-type',
+                'running'
+                ]
+       	 	},
+	{
+
+          Name:'instance-type',
             Values:[
                 'g4dn.xlarge'
-                ]
-        	},
+                ],
+         	 },
 	{
             Name:'tag:Name',
             Values:[
                 'scratch-XR-Test'
                 ]
-              }
+             	 }
 
     ]
 };
 
 // Call EC2 to retrieve instance description
-ec2.describeInstances(paramsStoppedG4, function(err, data) {
+ec2.describeInstances(params, function(err, data) {
   if (err) {
     console.error("Error", err.stack);
   } else {
-
+    //console.log("Success", JSON.stringify(data));
+    //Lots of info
     data.Reservations.map((reservation) => {
         reservation.Instances.map((instance) => {
-            
-            console.log(instance.State.Name + " instance: " + instance.InstanceId + " is of type " + instance.InstanceType);
+            //console.log(instance.PublicIpAddress);
+            console.log(instance.State.Name + " instance: " + instance.InstanceId + " is of type " + instance.InstanceType + " with ip address: " + instance.PublicIpAddress);
             let instances = instance.InstanceId;
             
-            let paramsStart = {
+            let paramsStop = {
                 InstanceIds: [instances]
               };
-              ec2.startInstances(paramsStart, function(err, dataStart) {
+              ec2.stopInstances(paramsStop, function(err, dataStop) {
                 if (err) {
                   console.error("Error", err);
-                } else if (dataStart) {
-                  console.log("Success", dataStart.StartingInstances);
+                } else if (dataStop) {
+                  console.log("Success", dataStop.StoppingInstances);
                 }
          
         });

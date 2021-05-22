@@ -1,7 +1,7 @@
 // Load the AWS SDK for Node.js
 const AWS = require('aws-sdk');
 // Set the region 
-AWS.config.update({region: 'us-east-1'});
+AWS.config.update({region: 'us-east-2'});
 
 // Create EC2 service object
 const ec2 = new AWS.EC2({apiVersion: '2016-11-15'});

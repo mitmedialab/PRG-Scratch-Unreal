@@ -15,7 +15,7 @@ const blockIconURI = "https://img.icons8.com/cotton/64/000000/visual-game-boy--v
 
 
 // ------------------ START UP WEBSOCKET CONNECTION --------------------------------
-var ws = new WebSocket("ws://3.16.89.150");  // address can be changed depending on websocket and port you connect to
+var ws = new WebSocket("ws://3.14.150.16");  //3.14.150.16 address can be changed depending on websocket and port you connect to
 
 ws.addEventListener("open", () => {
     console.log("we are connected");

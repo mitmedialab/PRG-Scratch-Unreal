@@ -1,16 +1,16 @@
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
-// Load credentials and set region from JSON file
-AWS.config.update({region: 'us-east-1'});
+// Set proper region here
+AWS.config.update({region: 'us-east-2'});
 
 // Create EC2 service object
 var ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
 
-// AMI is amzn-ami-2011.09.1.x86_64-ebs
+// This is our saved Unreal Launch Template
 const instanceParams = {
    
    LaunchTemplate: {
-    LaunchTemplateId: 'lt-00982bb91e4493853',
+    LaunchTemplateId: 'lt-0b904fe863129d662',
     Version: '1'},
    MinCount: 1,
    MaxCount: 1
@@ -29,7 +29,7 @@ instancePromise.then(
     tagParams = {Resources: [instanceId], Tags: [
        {
           Key: 'Name',
-          Value: 'Unreal Server'
+          Value: 'scratch-XR-Test6'
        }
     ]};
     // Create a promise on an EC2 service object
