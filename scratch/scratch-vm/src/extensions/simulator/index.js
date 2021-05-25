@@ -1,3 +1,5 @@
+'use strict';
+
 const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
 const Cast = require('../../util/cast');
@@ -8,26 +10,38 @@ const MathUtil = require('../../util/math-util');
 const RenderedTarget = require('../../sprites/rendered-target');
 const log = require('../../util/log');
 const StageLayering = require('../../engine/stage-layering');
+//const startSingleG4Instance = require ('../../util/startSingleG4Instance');
 
 const blockIconURI = "https://img.icons8.com/cotton/64/000000/visual-game-boy--v1.png";     // REQUIRED FOR BLOCK TO WORK. Doesnt show up otherwise
 
 
-
-
-// ------------------ START UP WEBSOCKET CONNECTION --------------------------------
-var ws = new WebSocket("ws://3.14.150.16");  //3.14.150.16 address can be changed depending on websocket and port you connect to
-
-ws.addEventListener("open", () => {
-    console.log("we are connected");
-});
-
-ws.addEventListener("message", e => {   // if message is sent to us, logs it to console
-    console.log(e.data);
-    //alert(e.data);
-});
+/*doStartStuff();
     
-                    
-                    
+async function doStartStuff() {
+    try {
+        // ------------------ START SINGLE G4 INSTANCE -------------------------------------
+
+        let dataStart = await startSingleG4Instance();
+        console.log("Success", dataStart.StartingInstances);
+        
+        // ------------------ START UP WEBSOCKET CONNECTION --------------------------------
+*/
+        let ws = new WebSocket("ws://3.14.150.16");  //3.14.150.16 address can be changed depending on websocket and port you connect to
+
+        ws.addEventListener("open", () => {
+            console.log("we are connected (as brothers in the Universe!)");
+        });
+
+        ws.addEventListener("message", e => {   // if message is sent to us, logs it to console
+            console.log(e.data);
+            //alert(e.data);
+        });
+    /*} catch(err) {
+        console.error("Error", err);
+    }
+}  */  
+
+
 // ------------------- BEGIN CREATING BLOCKS ----------------------------------------
 // more info on formatting can be found online
 // https://medium.com/@hiroyuki.osaki/how-to-develop-your-own-block-for-scratch-3-0-1b5892026421
