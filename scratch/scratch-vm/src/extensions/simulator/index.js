@@ -1,5 +1,3 @@
-'use strict';
-
 const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
 const Cast = require('../../util/cast');
@@ -10,38 +8,26 @@ const MathUtil = require('../../util/math-util');
 const RenderedTarget = require('../../sprites/rendered-target');
 const log = require('../../util/log');
 const StageLayering = require('../../engine/stage-layering');
-//const startSingleG4Instance = require ('../../util/startSingleG4Instance');
 
 const blockIconURI = "https://img.icons8.com/cotton/64/000000/visual-game-boy--v1.png";     // REQUIRED FOR BLOCK TO WORK. Doesnt show up otherwise
 
 
-/*doStartStuff();
+
+
+// ------------------ START UP WEBSOCKET CONNECTION --------------------------------
+var ws = new WebSocket("ws://18.216.244.161");  // address can be changed depending on websocket and port you connect to
+
+ws.addEventListener("open", () => {
+    console.log("we are connected (as brothers in the universe!)");
+});
+
+ws.addEventListener("message", e => {   // if message is sent to us, logs it to console
+    console.log(e.data);
+    //alert(e.data);
+});
     
-async function doStartStuff() {
-    try {
-        // ------------------ START SINGLE G4 INSTANCE -------------------------------------
-
-        let dataStart = await startSingleG4Instance();
-        console.log("Success", dataStart.StartingInstances);
-        
-        // ------------------ START UP WEBSOCKET CONNECTION --------------------------------
-*/
-        let ws = new WebSocket("ws://3.14.150.16");  //3.14.150.16 address can be changed depending on websocket and port you connect to
-
-        ws.addEventListener("open", () => {
-            console.log("we are connected (as brothers in the Universe!)");
-        });
-
-        ws.addEventListener("message", e => {   // if message is sent to us, logs it to console
-            console.log(e.data);
-            //alert(e.data);
-        });
-    /*} catch(err) {
-        console.error("Error", err);
-    }
-}  */  
-
-
+                    
+                    
 // ------------------- BEGIN CREATING BLOCKS ----------------------------------------
 // more info on formatting can be found online
 // https://medium.com/@hiroyuki.osaki/how-to-develop-your-own-block-for-scratch-3-0-1b5892026421
@@ -79,12 +65,12 @@ class Scratch3SimulatorBlocks {
                         TEXT: {
                             type: ArgumentType.STRING,  // specify that the argument for block is a string
                             defaultValue: 'message'
-                              }       
+                              }
                         }
                 },
                 
                 {   // same block as above but with a drop-down menu
-                    opcode: 'dropAlert',    
+                    opcode: 'dropAlert',
                     text: formatMessage({
                         id: 'menu_thing',
                         default: 'Drop Down Menu! [TEXT]',
@@ -340,14 +326,14 @@ class Scratch3SimulatorBlocks {
         var msg = Cast.toString(args.TEXT);
         msg = "scratch: high_acuity: " + msg;
         console.log('sending message: ' + msg);
-        ws.send(msg);       
+        ws.send(msg);
     }
 
     scotopic_vision(args){
         var msg = Cast.toString(args.TEXT);
         msg = "scratch: scotopic_vision: " + msg;
         console.log('sending message: ' + msg);
-        ws.send(msg);    
+        ws.send(msg);
     }
 
     predator(args){
@@ -364,7 +350,7 @@ class Scratch3SimulatorBlocks {
 
     drone_name(args){
         var msg = Cast.toString(args.TEXT);
-        msg = 'scratch: DroneName-' + msg;  // REV7 AND REV8    
+        msg = 'scratch: DroneName-' + msg;  // REV7 AND REV8
         // msg = '{"scratch": true, "UserInput": "' + msg + '"}';  // UNSURE JSON
         console.log("sending message: " + msg);
         ws.send(msg);
