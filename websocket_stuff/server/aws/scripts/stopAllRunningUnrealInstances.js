@@ -6,6 +6,7 @@ AWS.config.update({region: 'us-east-2'});
 // Create EC2 service object
 const ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
 
+// Declare parameters
 const params = {
     Filters: [
         {
@@ -24,7 +25,7 @@ const params = {
 	{
             Name:'tag:Name',
             Values:[
-                'scratch-XR-Test'
+                'scratch-XR-Candidate-02'
                 ]
              	 }
 
@@ -39,30 +40,28 @@ ec2.describeInstances(params, function(err, data) {
     //console.log("Success", JSON.stringify(data));
     //Lots of info
     data.Reservations.map((reservation) => {
-        reservation.Instances.map((instance) => {
-            //console.log(instance.PublicIpAddress);
-            console.log(instance.State.Name + " instance: " + instance.InstanceId + " is of type " + instance.InstanceType + " with ip address: " + instance.PublicIpAddress);
-            let instances = instance.InstanceId;
-            
-            let paramsStop = {
-                InstanceIds: [instances]
-              };
-              ec2.stopInstances(paramsStop, function(err, dataStop) {
-                if (err) {
-                  console.error("Error", err);
-                } else if (dataStop) {
-                  console.log("Success", dataStop.StoppingInstances);
-                }
+    reservation.Instances.map((instance) => {
+    //console.log(instance.PublicIpAddress);
+    console.log(instance.State.Name + " instance: " + instance.InstanceId + " is of type " + instance.InstanceType + " with ip address: " + instance.PublicIpAddress);
+    
+    let instances = instance.InstanceId;
+    let paramsStop = {
+    InstanceIds: [instances]
+    };
+    ec2.stopInstances(paramsStop, function(err, dataStop) {
+    if (err) {
+    console.error("Error", err);
+    } else if (dataStop) {
+    console.log("Success", dataStop.StoppingInstances);
+    }
          
-        });
+    });
 
-            //console.log(instances);
-
-        })
+    })
         
     })
     
-}
+    }
 
 });
 

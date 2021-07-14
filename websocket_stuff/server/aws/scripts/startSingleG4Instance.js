@@ -6,6 +6,10 @@ AWS.config.update({region: 'us-east-2'});
 // Create EC2 service object
 const ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const paramsStoppedG4 = {
     Filters: [
         {
@@ -32,8 +36,9 @@ ec2.describeInstances(paramsStoppedG4, function(err, data) {
 
             //Grab the first available stopped g4dn.xlarge and spin it up
             let instance = data.Reservations[0].Instances[0].InstanceId;
+            //sleep(2000).then(() => { console.log("Waiting for 3 seconds"); });
             console.log("Your single InstanceId is: " + instance);
-
+            
             let paramsStart = {
                 InstanceIds: [instance]
               };
@@ -41,19 +46,25 @@ ec2.describeInstances(paramsStoppedG4, function(err, data) {
                 if (err) {
                   console.error("Error", err);
                 } else if (dataStart) {
-                  console.log("Success", dataStart.StartingInstances);
-                }
+                    console.log("Success", dataStart.StartingInstances);
+                    sleep(5000).then(() => {
+                    ec2.describeInstances(paramsStart,function(err, dataIPRead){
+                        if (err) {
+                          console.error("Error", err);
+                        } else if (dataIPRead) {
+                            let instanceIPAddress = dataIPRead.Reservations[0].Instances[0].PublicIpAddress;
+                            console.log("Your single InstanceId is still: " + instance);
+                            console.log("Your instance's Public IP adress is: " + instanceIPAddress);
+                        }
+                        });
+                    });
+                    }
+                
          
-        });
+              });
 
-            
-
-        }
+            }
         
-    
-    
-
-
-});
+    });
 
 

@@ -11,20 +11,42 @@ const StageLayering = require('../../engine/stage-layering');
 
 const blockIconURI = "https://img.icons8.com/cotton/64/000000/visual-game-boy--v1.png";     // REQUIRED FOR BLOCK TO WORK. Doesnt show up otherwise
 
-
-
+//sleep timer to let instance spin up
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
 // ------------------ START UP WEBSOCKET CONNECTION --------------------------------
-var ws = new WebSocket("ws://3.16.89.150");  // address can be changed depending on websocket and port you connect to
 
-ws.addEventListener("open", () => {
-    console.log("we are connected");
-});
 
-ws.addEventListener("message", e => {   // if message is sent to us, logs it to console
+let ws;
+let instanceIPAddress;
+//invoke endpoint of API Gateway to Lambda Function.
+console.log("Grabbing an Unreal EC2 Instance. Be back in 30 seconds...");
+fetch('https://n0q8zqxuna.execute-api.us-east-2.amazonaws.com/default/myTestXRFunction')
+  .then(res => res.json())
+  .then(data => instanceIPAddress = data)
+  .then(() => sleep(20000)) //adjust this for speed vs realiable connection
+  .then(() => ws = new WebSocket("ws://" + instanceIPAddress))
+  .then(() => console.log(instanceIPAddress))
+  .then(() => ws.addEventListener("open", () => { console.log("we are connected (as brothers in the universe!)")}))
+  .then(() => ws.addEventListener("message", e => {   // if message is sent to us, logs it to console
+   console.log(e.data);
+}))
+  
+
+//old Websocket method, retained for safety
+//var ws = new WebSocket("ws://" + instanceIPAddress);  // address can be changed depending on websocket and port you connect to
+
+/* ws.addEventListener("open", () => {
+    console.log("we are connected (as brothers in the universe!)");
+}); */
+
+/* ws.addEventListener("message", e => {   // if message is sent to us, logs it to console
     console.log(e.data);
     //alert(e.data);
-});
+}); */
+
     
                     
                     
@@ -65,12 +87,12 @@ class Scratch3SimulatorBlocks {
                         TEXT: {
                             type: ArgumentType.STRING,  // specify that the argument for block is a string
                             defaultValue: 'message'
-                              }       
+                              }
                         }
                 },
                 
                 {   // same block as above but with a drop-down menu
-                    opcode: 'dropAlert',    
+                    opcode: 'dropAlert',
                     text: formatMessage({
                         id: 'menu_thing',
                         default: 'Drop Down Menu! [TEXT]',
@@ -326,14 +348,14 @@ class Scratch3SimulatorBlocks {
         var msg = Cast.toString(args.TEXT);
         msg = "scratch: high_acuity: " + msg;
         console.log('sending message: ' + msg);
-        ws.send(msg);       
+        ws.send(msg);
     }
 
     scotopic_vision(args){
         var msg = Cast.toString(args.TEXT);
         msg = "scratch: scotopic_vision: " + msg;
         console.log('sending message: ' + msg);
-        ws.send(msg);    
+        ws.send(msg);
     }
 
     predator(args){
@@ -350,7 +372,7 @@ class Scratch3SimulatorBlocks {
 
     drone_name(args){
         var msg = Cast.toString(args.TEXT);
-        msg = 'scratch: DroneName-' + msg;  // REV7 AND REV8    
+        msg = 'scratch: DroneName-' + msg;  // REV7 AND REV8
         // msg = '{"scratch": true, "UserInput": "' + msg + '"}';  // UNSURE JSON
         console.log("sending message: " + msg);
         ws.send(msg);

@@ -10,10 +10,10 @@ var ec2 = new AWS.EC2({apiVersion: '2016-11-15'});
 const instanceParams = {
    
    LaunchTemplate: {
-    LaunchTemplateId: 'lt-0b904fe863129d662',
+    LaunchTemplateId: 'lt-06e93387e7f17084e',
     Version: '1'},
-   MinCount: 1,
-   MaxCount: 1
+   MinCount: 3,
+   MaxCount: 3
 };
 
 // Create a promise on an EC2 service object
@@ -29,7 +29,7 @@ instancePromise.then(
     tagParams = {Resources: [instanceId], Tags: [
        {
           Key: 'Name',
-          Value: 'scratch-XR-Test6'
+          Value: 'scratch-XR-Candidate-02'
        }
     ]};
     // Create a promise on an EC2 service object

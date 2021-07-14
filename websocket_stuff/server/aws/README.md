@@ -1,11 +1,15 @@
-Raw AWS SDK scripts for controlling access to EC2 instances; including describing, creating, starting, stopping or termina$
+This is the cirrus.js and player.htm that allow aws instances to connect to various websocket services. 
 
-Place the .aws directory in your home directory for now. It uses the credentials of user 'XR-Script' for now.
+player.htm connects to playerServer in cirrus.js when the instance boots up. 
 
-Be very very careful with these for now as some of them will affect every instance of a certain type in the region. 
+External connections from Scratch or Google Colab Notebook connect to cirrus.js once the instance spins up and returns its public ip address to use for websocket connections.
 
-Most file names explain what they do. 
+cirrus.js tracks connected users to the websocket and when a player disconnects for any reason, the instance will self-stop.
 
-startAll_G4_Instances and startSingle_G4_Instance are currently working and will be rolled into the Scratch script instead of bing standalone.
+aws-sdk and aws-instance-metadata need to be npm installed using the --save switch when cirrus.js and player.htm are copied over the original versions.
 
-ec2_describeinstances will give you useful information about all instances in the region.
+The scripts folder holds lots of scripts that make controlling huge numbers of aws ec2 instances much easier. Much of the Lambda function code for waking a stopped instance or the code in cirrus.js to stop and instance are based on these scripts.
+
+Scripts require a key pair in ~/.aws or Windows user's home directory. The keys cannot be stored in a public repo for security purposes. Contact me if you need them.
+
+Lambda functions and cirrus.js do NOT need keys stored locally, as they use IAM Roles for authentication.
