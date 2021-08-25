@@ -23,7 +23,7 @@ AWS.config.update({region: 'us-east-2'});
 const defaultConfig = {
 	UseFrontend: false,
 	UseMatchmaker: false,
-	UseHTTPS: false,
+	UseHTTPS: true,
 	UseAuthentication: false,
 	LogToFile: true,
 	HomepageFile: 'player.htm',
@@ -147,11 +147,11 @@ try {
 }
 
 if (config.UseHTTPS) {
-	app.use(helmet());
+	//app.use(helmet());
 
-	app.use(hsts({
-		maxAge: 15552000  // 180 days in seconds
-	}));
+	//app.use(hsts({
+		//maxAge: 15552000  // 180 days in seconds
+	//}));
 
 	//Setup http -> https redirect
 	console.log('Redirecting http->https');

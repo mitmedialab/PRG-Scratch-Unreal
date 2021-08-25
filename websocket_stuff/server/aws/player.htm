@@ -60,7 +60,7 @@
 
 <script>
    
-   let url = 'ws://' + window.location.host;
+   let url = 'wss://' + window.location.host;
    //console.log(url);
    const sock = new WebSocket(url)
    sock.onopen = function(){
