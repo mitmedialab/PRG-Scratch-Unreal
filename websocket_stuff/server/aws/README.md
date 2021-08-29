@@ -1,13 +1,14 @@
 How to install and scale AWS instances of Unreal with Pixel Streaming and Deploy as HTTPS: on Port 443.
 
-Step 1: Whenever you have a new build of the Unreal executable: 
+Step 1: Whenever you have a new build of the Unreal executable:
+
     1. BEFORE you zip it up for deployment, replace cirrus.js, config.json, and player.htm in "C:\PixelStreamer\WindowsNoEditor\Engine\Source\Programs\PixelStreaming\WebServers\SignallingWebServer" with the custom versions from the "PRG-Scratch-Unreal/websocket_stuff/server/aws" directory.
     2. The automation scripts require the "aws-sdk" and "aws-instance-metadata" node.js modules to be installed. 
     3. From the directory in which cirrus.js resides, run "npm install --save aws-sdk"
     4. From the directory in which cirrus.js resides, run "npm install --save aws-instance-metadata"
     5. Copy the "C:\PixelStreamer\WindowsNoEditor\Engine\Source\Programs\PixelStreaming\WebServers\SignallingWebServer\certificates" folder to the directory in which cirrus.js resides. These certificates are from "Let's Encrypt" and are only good for 90 days. They MUST live on the machine in the "certificates" directory to enable this entire system to work over https: on port 443. (Jon/Parker should work on a way to have the instance request an updated certificate as it spins up so it's fresh and valid every time an instance spins up otherwise you'll need to install new certificates at the end of the 90 days and save off that instance as a NEW custom Amazon Machine Image (AMI) and create a new "Launch Template" from using that AMI. This will be a big pain in the butt.)
     6. You are now ready to follow the instuctions here:
-
+        
         https://github.com/aws-samples/deploying-unreal-engine-pixel-streaming-server-on-ec2
 
         The Could Formation template and bootstrap script mentioned in these instructions are also in the repo under 'cloud_formation_tools'
