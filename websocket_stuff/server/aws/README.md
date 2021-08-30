@@ -26,10 +26,13 @@ Step 1: Whenever you have a new build of the Unreal executable:
 
     At this point, everything is automatic and an instance should spin up, get entered into the DNS table, and the Unreal content should pop up streaming in the Notebook and you should be able to issue commands in the cells below it. Keyboard and Mouse commands work as epxpected in the interface. You may need to click in the embed window to make it active if you've clicked away for something else.
 
+The colab notebook which uses this toolchain is here:
+
+https://colab.research.google.com/drive/1wJanNkTiNkSOCzxWGwlzJao1_84miNoS?usp=sharing
 
 The order of operations is such:
 
-When the simulation Scratch blocks OR the first cell of the colab notebook is run, a fetch command is called on an Amazon API Gateway. This Gateway is the trigger for the Lambda function that then finds all "Stopped" g4dn instances (you can add a tag if you'd like). It will grab the first instance in the list and spin it up into the "Running" state. The Lambda function will wait for 15 seconds to allow the instance to be assigned its public ip address, after which it will return the ip address as the body of a json response to scratch or the clab notebook who will then use that ip address to establish the websocket connections they need with the recently woken instance. The public ip address is also reformatted by the Lambda function as an "A" record and entered in the proper routing table. Scrath or the Colab notebook will also reformat the ip address it received into the fully qualified domain name and display it in the embed (this is not working in Scratch yet. Not sure if Scratch can do embeds?)
+When the simulation Scratch blocks OR the first cell of the colab notebook is run, a fetch command is called on an Amazon API Gateway. This Gateway is the trigger for the Lambda function that then finds all "Stopped" g4dn instances (you can add a tag if you'd like). It will grab the first instance in the list and spin it up into the "Running" state. The Lambda function will wait for 15 seconds to allow the instance to be assigned its public ip address, after which it will return the ip address as the body of a json response to scratch or the colab notebook who will then use that ip address to establish the websocket connections they need with the recently woken instance. The public ip address is also reformatted by the Lambda function as an "A" record and entered in the proper routing table. Scrath or the Colab notebook will also reformat the ip address it received into the fully qualified domain name and display it in the embed (this is not working in Scratch yet. Not sure if Scratch can do embeds?)
 
 player.htm connects to playerServer in cirrus.js when the instance boots up. 
 
